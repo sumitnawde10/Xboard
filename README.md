@@ -34,3 +34,31 @@ Xboard is an intelligent Flask-based web platform that enables users to instantl
    ```bash
    git clone https://github.com/yourusername/xboard.git
    cd xboard
+2.Create virtual environment (optional but recommended)
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+Install Required Libraries
+
+pip install -r requirements.txt
+Run the Flask Application
+
+python app.py
+Access the Dashboard
+Open http://127.0.0.1:5000 in your browser.
+
+📊 Key Functionalities
+
+🧠 Automatic Dataset Detection (Sales/HR/Marketing/General)
+
+📈 Statistical Analysis (mean, median, std)
+
+📊 Chart Generation (bar charts, histograms)
+
+📁 Clean Data Export in Excel format
+
+⚙️ Reusable Utility Modules for easy integration into other analytics projects
+
+👤 Contributors
+
+Sumit Nawde 
