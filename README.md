@@ -39,11 +39,15 @@ python -m venv venv.
 source venv/bin/activate  # On Windows: venv\Scripts\activate.
 
 3.**Install Required Libraries.**
+
 pip install -r requirements.txt.
 
 4.**Run the Flask Application.**
+
 python app.py.
+
 Access the Dashboard.
+
 Open http://127.0.0.1:5000 in your browser.
 
 📊 Key Functionalities.
