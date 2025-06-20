@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xboard - Excel Dashboard Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .green-box {
+      position: absolute;
+      background-color: #2be283;
+      opacity: 0.4;
+      border-radius: 0.5rem;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 flex flex-col min-h-screen relative overflow-hidden">
+
+  <!-- Background Green Boxes -->
+  <div class="green-box w-40 h-40 top-10 left-10"></div>
+  <div class="green-box w-32 h-28 top-44 right-20"></div>
+  <div class="green-box w-24 h-36 bottom-20 left-28"></div>
+  <div class="green-box w-32 h-32 bottom-36 right-36"></div>
+  <div class="green-box w-20 h-20 top-1/2 left-1/2"></div>
+  <div class="green-box w-32 h-32 bottom-10 right-10"></div>
+  <div class="green-box w-24 h-24 top-16 right-1/4"></div>
+
+  <!-- Header -->
+  <header class="bg-green-600 text-white py-6 px-12 shadow-md relative z-10">
+    <div class="text-4xl italic font-bold cursor-pointer" id="homeClick">X'board</div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col md:flex-row items-center justify-between px-16 py-20 gap-20 relative z-10">
+
+    <!-- Upload Section -->
+    <div class="w-full md:w-1/2 space-y-10">
+      <h2 class="text-3xl font-semibold text-green-700">Upload your data file</h2>
+
+      <p class="text-2xl text-green-700 italic">
+        From raw sheets to real insights — instantly.
+      </p>
+
+      <button id="uploadTrigger" class="bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-8 rounded shadow">
+        Upload File
+      </button>
+
+      <!-- Upload Form -->
+      <form id="uploadForm" class="hidden flex flex-col space-y-4" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".csv,.xlsx,.xls"
+               class="p-3 text-lg rounded w-full border border-gray-300
+                      file:bg-green file:text-green-600
+                      file:border file:border-green-600
+                      file:rounded file:px-4 file:py-2 file:font-medium file:cursor-pointer" />
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-2.5 px-6 text-lg rounded shadow w-max">
+          Submit
+        </button>
+      </form>
+
+      <p id="statusMsg" class="text-green-600 text-lg font-semibold hidden">✅ Dashboard Ready</p>
+
+      <a id="downloadBtn" href="/download" class="hidden bg-green-500 hover:bg-green-600 text-white py-2.5 px-6 text-lg rounded shadow w-max mt-5 block">
+        Download Dashboard
+      </a>
+    </div>
+
+    <!-- Right Image -->
+    <div class="w-full md:w-1/2 flex justify-center">
+      <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png"
+           alt="Analysis"
+           class="w-[320px] md:w-[420px] drop-shadow-xl" />
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white text-center py-4 text-lg relative z-10">
+    © 2025 Xboard. All rights reserved.
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const uploadTrigger = document.getElementById('uploadTrigger');
+    const uploadForm = document.getElementById('uploadForm');
+    const statusMsg = document.getElementById('statusMsg');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const homeClick = document.getElementById('homeClick');
+
+    uploadTrigger.addEventListener('click', () => {
+      uploadForm.classList.remove('hidden');
+    });
+
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (!file) return alert("Please select a file.");
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (res.ok) {
+        statusMsg.classList.remove('hidden');
+        downloadBtn.classList.remove('hidden');
+      } else {
+        alert("Error processing file.");
+      }
+    });
+
+    homeClick.addEventListener('click', () => {
+      location.reload();
+    });
+  </script>
+
+</body>
+</html>
